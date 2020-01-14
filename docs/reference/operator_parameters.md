@@ -152,7 +152,7 @@ configuration they are grouped under the `kubernetes` key.
   service account used by Patroni running on individual Pods to communicate
   with the operator. Required even if native Kubernetes support in Patroni is
   not used, because Patroni keeps pod labels in sync with the instance role.
-  The default is `postgres-operator-patroni`.
+  The default is `postgres-pod`.
 
 * **pod_service_account_definition**
   on Postgres cluster creation the operator tries to create the service account

@@ -118,11 +118,10 @@ also created (or read) by the operator. The name and definitions of these
 resources can be [configured](reference/operator_parameters.md#kubernetes-resources).
 Note, that the operator performs **no** further syncing of them.
 
-Previous releases created RoleBindings to the operator ClusterRole. This can
-still be configured but is not recommended as the Postgres Pods should only run
-with the least privileges required for Patroni to work. By default, the
-namespaced RBAC resources are named like the ones for operator but with a
-`-patroni` suffix.
+Until v1.3.1, RoleBindings pointed to the operator ClusterRole by default. This
+can still be configured but is not recommended as the Postgres Pods should only
+run with the least privileges required for Patroni to work. By default, the
+namespaced RBAC resources are named `postgres-pod`.
 
 ### Give K8s users access to create/list `postgresqls`
 

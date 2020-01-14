@@ -166,7 +166,7 @@ func (c *Controller) initPodServiceAccount() {
 			"apiVersion": "v1",
 			"kind": "ServiceAccount",
 			"metadata": {
-				"name": "postgres-operator-patroni"
+				"name": "postgres-pod"
 			}
 		}`
 	}
