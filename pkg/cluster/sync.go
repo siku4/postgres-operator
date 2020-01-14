@@ -451,12 +451,20 @@ func (c *Cluster) syncRoles() (err error) {
 	for _, u := range c.pgUsers {
 		userNames = append(userNames, u.Name)
 	}
+
+	// An exception from system users, connection pool user
+	connPoolUser := c.systemUsers[constants.ConnectionPoolUserKeyName]
+	userNames = append(userNames, connPoolUser.Name)
+	c.pgUsers[connPoolUser.Name] = connPoolUser
+
 	dbUsers, err = c.readPgUsersFromDatabase(userNames)
 	if err != nil {
 		return fmt.Errorf("error getting users from the database: %v", err)
 	}
 
+	c.logger.Infof("dbUsers %+v c.pgUsers %+v", dbUsers, c.pgUsers)
 	pgSyncRequests := c.userSyncStrategy.ProduceSyncRequests(dbUsers, c.pgUsers)
+	c.logger.Infof("Sync roles %+v", pgSyncRequests)
 	if err = c.userSyncStrategy.ExecuteSyncRequests(pgSyncRequests, c.pgDb); err != nil {
 		return fmt.Errorf("error executing sync statements: %v", err)
 	}
