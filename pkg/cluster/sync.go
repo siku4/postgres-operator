@@ -462,9 +462,7 @@ func (c *Cluster) syncRoles() (err error) {
 		return fmt.Errorf("error getting users from the database: %v", err)
 	}
 
-	c.logger.Infof("dbUsers %+v c.pgUsers %+v", dbUsers, c.pgUsers)
 	pgSyncRequests := c.userSyncStrategy.ProduceSyncRequests(dbUsers, c.pgUsers)
-	c.logger.Infof("Sync roles %+v", pgSyncRequests)
 	if err = c.userSyncStrategy.ExecuteSyncRequests(pgSyncRequests, c.pgDb); err != nil {
 		return fmt.Errorf("error executing sync statements: %v", err)
 	}
